@@ -1,0 +1,40 @@
+{
+  "name": "fashion-api",
+  "version": "1.0.0",
+  "description": "REST and gRPC backend for the Fashion Store",
+  "keywords": [
+    "fashion",
+    "api",
+    "rest",
+    "grpc",
+    "typescript"
+  ],
+  "homepage": "https://github.com/Wahab-Al/Fashion-API#readme",
+  "bugs": {
+    "url": "https://github.com/Wahab-Al/Fashion-API/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wahab-Al/Fashion-API.git"
+  },
+  "license": "MIT",
+  "author": "Wahab Alhamad",
+  "type": "module",
+  "main": "src/server.ts",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}
