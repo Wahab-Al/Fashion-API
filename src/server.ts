@@ -1,7 +1,10 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import { testConnection }  from './config/database/db'
 
 dotenv.config()
+testConnection()
+
 
 const app = express()
 const PORT : number = process.env.PORT ? Number(process.env.PORT) : 5000
