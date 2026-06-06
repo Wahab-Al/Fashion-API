@@ -10,7 +10,9 @@ dotenv.config()
 const app = express()
 const PORT : number = process.env.PORT ? Number(process.env.PORT) : 5000
 
+
 app.use(express.json())
+
 
 testConnection()
 runMigrations()
