@@ -11,13 +11,13 @@ interface AuthenticatedRequest extends Request {
 // register controller:
 export const register = async (request: Request, response: Response) : Promise<void> =>{
   try {
-    const { name, surname, email, password, zipCode, city, street, state } = request.body
-    if(!name || !surname || !email || !password){
+    const { name, surname, email, password } = request.body
+    if(!name || !surname || !email || !password ){
       response.status(400).json({ error: 'All fields are required'})
       return
     }
 
-    const result = await registerService({ name, surname, email, password, zipCode, city, street, state })
+    const result = await registerService({ name, surname, email, password })
     response.status(201).json({ message: 'User registered successfully', data: result})
   } catch (error: any) {
     response.status(400).json({ error: error.message })
