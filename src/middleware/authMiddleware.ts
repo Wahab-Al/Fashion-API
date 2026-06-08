@@ -24,7 +24,7 @@ export const authMiddleware = async (request: AuthenticatedRequest, response: Re
     const decoded = jwt.verify(token, jwtConfig.secret as string) as { uuid: string }
 
     const [rows] = await pool.execute(
-      'SELECT uuid, tokens FROM users WHERE  = ?',
+      'SELECT uuid, tokens FROM users WHERE uuid = ?',
       [decoded.uuid]
     )
 

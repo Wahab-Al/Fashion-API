@@ -55,7 +55,8 @@ export const loginService = async (email: string, password: string) : Promise<{ 
   }
 
   const token = jwt.sign({ uuid: user.uuid },jwtConfig.secret  as string, { expiresIn: jwtConfig.expiresIn as any})
-  const currentTokens = user.tokens ? JSON.parse(user.tokens as unknown as string) : []
+  const currentTokens = Array.isArray(user.tokens) ? user.tokens as string[] :
+    JSON.parse(user.tokens as unknown as string || '[]') as string[]
   currentTokens.push(token)
 
   await pool.execute(
