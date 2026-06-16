@@ -6,7 +6,61 @@ interface AuthenticatedRequest extends Request {
 }
 
 
-// Get all users
+//#region User controller in User Dashboard (Customer Self-Management Controllers)
+
+// GET /api/users/me
+export const getMyProfile = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+  try {
+    const uuid = request.user?.uuid!;
+    const user = await getUserByUuidService(uuid);
+    response.status(200).json({ data: user });
+  } catch (error: any) {
+    response.status(404).json({ error: error.message });
+  }
+};
+
+// PATCH /api/users/me
+export const updateMyProfile = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+  try {
+    const uuid = request.user?.uuid!;
+    
+    if (request.body.role) {
+      response.status(403).json({ error: 'Action forbidden: Cannot alter account role hierarchy' });
+      return;
+    }
+
+    await updateUserService(uuid, request.body);
+    response.status(200).json({ message: 'Your profile has been updated successfully' });
+  } catch (error: any) {
+    response.status(500).json({ error: error.message });
+  }
+};
+
+// DELETE /api/users/me
+export const deleteMyAccount = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+  try {
+    const uuid = request.user?.uuid!;
+    await deleteUserService(uuid);
+
+    response.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax'
+    });
+
+    response.status(200).json({ message: 'Your e-commerce account has been permanently terminated' });
+  } catch (error: any) {
+    response.status(500).json({ error: error.message });
+  }
+};
+
+//#endregion
+
+
+
+//#region User Controller in Admin Dashboard
+
+// GET /api/users
 export const getAllUsers = async () : Promise<void> => {
   try {
     const users = await getAllUsersService()
@@ -17,7 +71,7 @@ export const getAllUsers = async () : Promise<void> => {
 }
 
 
-// Get user by uuid
+// GET /api/users/:uuid
 export const getUserByUuid = async (request: Request, response: Response): Promise<void> => {
   try {
     const uuid  = String(request.params.uuid)
@@ -29,7 +83,7 @@ export const getUserByUuid = async (request: Request, response: Response): Promi
 }
 
 
-// Update user
+// PATCH /api/users/:uuid
 export const updateUser = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
   try {
     const { uuid } = request.params
@@ -45,7 +99,7 @@ export const updateUser = async (request: AuthenticatedRequest, response: Respon
 }
 
 
-// Delete user
+// DELETE /api/users/:uuid
 export const deleteUser = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
   try {
     const { uuid } = request.params
@@ -59,3 +113,6 @@ export const deleteUser = async (request: AuthenticatedRequest, response: Respon
     response.status(500).json({ error: error.message })
   }
 }
+
+
+//#endregion

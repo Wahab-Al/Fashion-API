@@ -5,6 +5,9 @@ import { v7 as uuidv7 } from 'uuid'
 import { IUser } from "../../interfaces/IUser";
 import { jwtConfig } from "../../config/jwt/jwt.config";
 
+
+//#region Authentication Serviec
+
 // register service
 export const registerService = async (userData: Omit<IUser, 'id' | 'uuid' | 'tokens' | 'role' | 'created_at' | 'updated_at'>) : Promise<{user: Partial<IUser>, token: string}> => {
   const { name, surname, email, password } = userData
@@ -14,13 +17,13 @@ export const registerService = async (userData: Omit<IUser, 'id' | 'uuid' | 'tok
   )
 
   if((rows as any[]).length > 0){
-    throw new Error('Email already registerd')
+    throw new Error('Email already registered')
   } 
 
   const hashedPassword = await argon2.hash(password)
 
   const uuid = uuidv7()
-  const token = jwt.sign({uuid} , jwtConfig.secret  as string, { expiresIn: jwtConfig.expiresIn as any})
+  const token = jwt.sign({ uuid, role: 'customer' } , jwtConfig.secret  as string, { expiresIn: jwtConfig.expiresIn as any})
   const tokens = JSON.stringify([token])
 
   await pool.execute(
@@ -54,7 +57,7 @@ export const loginService = async (email: string, password: string) : Promise<{ 
     throw new Error('Invalid email or password')
   }
 
-  const token = jwt.sign({ uuid: user.uuid },jwtConfig.secret  as string, { expiresIn: jwtConfig.expiresIn as any})
+  const token = jwt.sign({ uuid: user.uuid, role: user.role },jwtConfig.secret  as string, { expiresIn: jwtConfig.expiresIn as any})
   const currentTokens = Array.isArray(user.tokens) ? user.tokens as string[] :
     JSON.parse(user.tokens as unknown as string || '[]') as string[]
   currentTokens.push(token)
@@ -96,3 +99,5 @@ export const logoutAllService = async (uuid: string) : Promise<void> => {
     [JSON.stringify([]), uuid]
   )
 } 
+
+//#endregion
