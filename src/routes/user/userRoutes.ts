@@ -5,7 +5,7 @@ import { adminMiddleware } from '../../middleware/admin/adminMiddleware'
 
 const router = Router()
 
-//#region Customer Self-Management (MUST BE FIRST)
+//#region Customer Self-Management
 router.get('/me', authMiddleware, getMyProfile);        
 router.patch('/me', authMiddleware, updateMyProfile);
 router.delete('/me', authMiddleware, deleteMyAccount);
