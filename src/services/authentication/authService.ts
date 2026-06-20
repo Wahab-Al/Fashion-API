@@ -9,7 +9,8 @@ import { jwtConfig } from "../../config/jwt/jwt.config";
 //#region Authentication Serviec
 
 // register service
-export const registerService = async (userData: Omit<IUser, 'id' | 'uuid' | 'tokens' | 'role' | 'created_at' | 'updated_at'>) : Promise<{user: Partial<IUser>, token: string}> => {
+export const registerService = async (userData: Omit<IUser, 'id' | 'uuid' | 'tokens' | 'role' | 'created_at' | 'updated_at'>)
+: Promise<{user: Partial<IUser>, token: string}> => {
   const { name, surname, email, password } = userData
 
   const [rows] = await pool.execute(
@@ -92,7 +93,7 @@ export const logoutService = async (uuid: string, token: string) : Promise<void>
 }
 
 
-//logoutAll service
+// logoutAll service
 export const logoutAllService = async (uuid: string) : Promise<void> => {
   await pool.execute(
     'UPDATE users SET tokens = ? WHERE uuid = ?', 

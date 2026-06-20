@@ -5,6 +5,7 @@ export const createAddressTable = async () : Promise<void> =>{
     CREATE TABLE IF NOT EXISTS address(
       id INT AUTO_INCREMENT PRIMARY KEY,
       uuid VARCHAR(36) NOT NULL UNIQUE,
+      user_id INT NOT NULL,
       zip_code VARCHAR(20),
       city VARCHAR(100),
       street VARCHAR(150),
