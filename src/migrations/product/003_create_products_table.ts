@@ -1,7 +1,10 @@
 import pool from "../../config/database/db";
 
-export const createProductTable = async () : Promise<void> => {
-  const createTableQuery = `
+
+
+//#region UP MIGRATION: CREATE PRODUCT TABLE
+export const up = async (): Promise<void> => {
+  await pool.execute(`
     CREATE TABLE IF NOT EXISTS products(
       id INT AUTO_INCREMENT PRIMARY KEY,
       uuid VARCHAR(36) NOT NULL UNIQUE,
@@ -19,7 +22,16 @@ export const createProductTable = async () : Promise<void> => {
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       FOREIGN KEY (category_id) REFERENCES categories(id)
     )
-  `
-  await pool.execute(createTableQuery)
-  console.log(`Product table created successfully ..`)  
+  `)
 }
+//#endregion
+
+
+//#region DOWN MIGRATION: DROP PRODUCT TABLE
+/**
+ * Defines to rollback and remove product table
+ */
+export const down = async (): Promise<void> => {
+  await pool.execute('DROP TABLE IF EXISTS products')
+}
+//#endregion

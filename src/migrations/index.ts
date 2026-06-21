@@ -1,17 +1,46 @@
-import { createUsersTable } from "./user/001_create_users_table";
-import { createCategoriesTable } from "./category/002_create_categories_table";
-import { createProductTable } from "./product/003_create_products_table";
-import { createOrderTabe } from "./order/004_create_orders_table";
-import { createOrderLinesTable } from "./orderLine/005_create_order_lines_table";
-import { createAddressTable } from "./Address/006_create_address_table";
+import { up as upUsers, down as downUsers } from './user/001_create_users_table'
+import { up as upCategories, down as downCategories } from "./category/002_create_categories_table"
+import { up as upProducts, down as downProducts } from "./product/003_create_products_table"
+import { up as upOrders, down as downOrders } from "./order/004_create_orders_table"
+import { up as upOrderLines, down as downOrderLines } from "./orderLine/005_create_order_lines_table"
+import { up as upAddress, down as downAddress } from "./Address/006_create_address_table"
 
 
+
+/**
+ * Executes all 'UP' migrations to build the database schema
+ */
 export const runMigrations = async () : Promise<void> => {
-  await createUsersTable()
-  await createCategoriesTable()
-  await createProductTable()
-  await createOrderTabe()
-  await createOrderLinesTable()
-  await createAddressTable()
-  console.log(`All migrations completed successfully.. `)
+  try {
+    await upUsers();
+    await upCategories();
+    await upProducts();
+    await upOrders();
+    await upOrderLines();
+    await upAddress();
+    console.log(`All UP migrations completed successfully.. `)
+  } catch (error) {
+    console.error(`Migration UP failed ${error}`)
+    throw error
+  }
+}
+
+
+
+/**
+ * Executes all 'DOWN' migrations to tear down the database schema
+ */
+export const runDownMigrations = async (): Promise<void> => {
+  try {
+    await downOrderLines()
+    await downOrders()
+    await downAddress()
+    await downProducts()
+    await downCategories()
+    await downUsers()
+    console.log('All DOWN migrations completed successfully.')
+  } catch (error) {
+    console.error(`Migration Down failed ${error}`)
+    throw error
+  }
 }
