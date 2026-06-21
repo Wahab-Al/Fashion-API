@@ -5,7 +5,7 @@ import { adminMiddleware } from '../../middleware/admin/adminMiddleware'
 
 const router = Router()
 
-//#region Category Controller
+//#region Category Routes
 router.get('/', getAllCategories)
 router.get('/:uuid', getCategoryByUuid)
 router.post('/', authMiddleware, adminMiddleware, createCategory)

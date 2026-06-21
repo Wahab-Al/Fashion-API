@@ -18,7 +18,7 @@ export const getUserAddressesService = async (userUuid: string) : Promise<IAddre
 }
 
 
-// Get 
+// Create new user address 
 export const createAddressService = async (
   userUuid: string, 
   data: Omit<IAddress, 'uuid' | 'id' | 'user_id'> 
@@ -40,9 +40,44 @@ export const createAddressService = async (
     'INSERT INTO addresses (uuid, user_id, zip_code, city, street, state) VALUES (?, ?, ?, ?, ?, ?)', 
     [addressUuid, userId, data.zip_code, data.city, data.street, data.state]
   )
+  if(insertedResult.affectedRows === 0){
+    throw new Error('Failed to create address record')
+  }
   
   return { 
     uuid: addressUuid, 
     ...data 
   } as IAddress
 }
+
+
+// Update Address infos
+export const updateAddressService = async (uuid: string, data: Omit<IAddress, 'id' | 'user_id'>)
+: Promise<void> => {
+  const [rows] = await pool.execute<ResultSetHeader>(
+    `UPDATE addresses SET zip_code = COALESCE(?, zip_code),
+    city = COALESCE(?, city),
+    street = COALESCE(?, street),
+    state = COALESCE(?, state) WHERE uuid = ?
+    `, [data.zip_code ?? null, data.city ?? null, data.street ?? null, data.state ?? null, uuid]
+  )
+  if (rows.affectedRows === 0) {
+    throw new Error('address not found')
+  }
+}
+
+
+
+
+// Delete Address 
+export const deleteAddressService = async (uuid: string) 
+: Promise<void> => {
+  const [rows] = await pool.execute<RowDataPacket[]>(
+    'SELECT id FROM addresses WHERE uuid = ?', [uuid]
+  )
+  if(rows.length === 0){
+    throw new Error('address that you search not found')
+  }
+
+  await pool.execute<ResultSetHeader>('DELETE FROM addresses WHERE uuid = ?', [uuid])
+} 

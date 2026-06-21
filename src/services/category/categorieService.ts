@@ -58,7 +58,7 @@ export const updateCategoryService = async (uuid: string, data: Partial<ICategor
 
 
 
-// Delete category infos
+// Delete category 
 export const deleteCategoryService = async (uuid: string): Promise<void> => {
   const [rows] = await pool.execute(
     'SELECT id FROM categories WHERE uuid = ?', [uuid]

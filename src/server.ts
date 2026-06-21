@@ -7,6 +7,9 @@ import router from './routes/authentication/authRoutes'
 import cors from 'cors'
 import userRouter from './routes/user/userRoutes'
 import categoryRouter from './routes/category/categorieRoutes'
+import addressRouter from './routes/address/addressRoutes'
+import productRouter from './routes/product/productRoutes'
+import orderRouter from './routes/order/orderRoutes'
 
 
 dotenv.config()
@@ -30,6 +33,12 @@ app.use('/api/auth', router)
 app.use('/api/users', userRouter)
 
 app.use('/api/categories', categoryRouter)
+
+app.use('/api/addresses', addressRouter)
+
+app.use('/api/products', productRouter)
+
+app.use('/api/orders', orderRouter)
 
 
 testConnection()

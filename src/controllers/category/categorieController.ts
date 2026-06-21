@@ -5,7 +5,7 @@ import { getAllCategoriesService, getCategoryByUuidService, createCategoryServic
 //#region Category Controller
 
 
-// Get all Categories
+// GET /api/categories
 export const getAllCategories = async (req: Request, res: Response): Promise<void> => {
   try {
     const categories = await getAllCategoriesService()
@@ -17,7 +17,7 @@ export const getAllCategories = async (req: Request, res: Response): Promise<voi
 
 
 
-// get category by uuid
+// GET /api/categories/:uuid
 export const getCategoryByUuid = async (req: Request, res: Response): Promise<void> => {
   try {
     const uuid = String(req.params.uuid)
@@ -30,7 +30,7 @@ export const getCategoryByUuid = async (req: Request, res: Response): Promise<vo
 
 
 
-// Create category infos
+// POST /api/categories/:uuid
 export const createCategory = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, img_url } = req.body
@@ -47,7 +47,7 @@ export const createCategory = async (req: Request, res: Response): Promise<void>
 
 
 
-// Update category infos
+// PATCH /api/categories/:uuid
 export const updateCategory = async (req: Request, res: Response): Promise<void> => {
   try {
     const uuid = String(req.params.uuid)
@@ -60,8 +60,7 @@ export const updateCategory = async (req: Request, res: Response): Promise<void>
 
 
 
-
-// Delete category infos
+// DELETE /api/categories/:uuid
 export const deleteCategory = async (req: Request, res: Response): Promise<void> => {
   try {
     const uuid = String(req.params.uuid)
