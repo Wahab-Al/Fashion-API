@@ -4,15 +4,10 @@ import { RowDataPacket } from "mysql2";
 
 
 
-interface AuthenticatedRequest extends Request {
-  user?: { uuid: string }
-}
-
-
 //#region Admin Authorization Middleware
 
 // Admin Role-Based Access Control (RBAC) Middleware
-export const adminMiddleware = async (request: AuthenticatedRequest, response: Response, next: NextFunction
+export const adminMiddleware = async (request: Request, response: Response, next: NextFunction
 ) : Promise<void> => {
   try {
 

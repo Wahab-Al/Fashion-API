@@ -13,7 +13,6 @@ export const up = async () : Promise<void> => {
       email VARCHAR(150) NOT NULL UNIQUE,
       password VARCHAR(255) NOT NULL,
       role ENUM('admin', 'customer') NOT NULL DEFAULT 'customer',
-      tokens JSON,
       street VARCHAR(255),
       city VARCHAR(100),
       state VARCHAR(100),

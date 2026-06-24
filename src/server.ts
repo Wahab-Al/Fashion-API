@@ -10,6 +10,7 @@ import categoryRouter from './routes/category/categorieRoutes'
 import addressRouter from './routes/address/addressRoutes'
 import productRouter from './routes/product/productRoutes'
 import orderRouter from './routes/order/orderRoutes'
+import tokenRouter from './routes/token/tokenRoutes'
 
 
 dotenv.config()
@@ -39,6 +40,8 @@ app.use('/api/addresses', addressRouter)
 app.use('/api/products', productRouter)
 
 app.use('/api/orders', orderRouter)
+
+app.use('/api/auth', tokenRouter)
 
 
 testConnection()

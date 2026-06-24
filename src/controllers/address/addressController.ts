@@ -2,13 +2,9 @@ import { Request, Response } from "express";
 import { getUserAddressesService, createAddressService, updateAddressService, deleteAddressService } from "../../services/address/addressService";
 
 
-interface AuthenticatedRequest extends Request {
-  user?: { uuid: string }
-}
-
 
 // GET /api/addresses
-export const getUserAddresses = async (request: AuthenticatedRequest, response: Response) 
+export const getUserAddresses = async (request: Request, response: Response) 
 : Promise<void> => {
   try {
     const addresses = await getUserAddressesService(request.user!.uuid)
@@ -22,7 +18,7 @@ export const getUserAddresses = async (request: AuthenticatedRequest, response: 
 
 
 // POST /api/addresses
-export const createAddress = async (request: AuthenticatedRequest, response: Response) 
+export const createAddress = async (request: Request, response: Response) 
 : Promise<void> => {
   try {
     const address = await createAddressService(request.user!.uuid, request.body)
@@ -36,7 +32,7 @@ export const createAddress = async (request: AuthenticatedRequest, response: Res
 
 
 // PATCH /api/addresses/:uuid
-export const updateAddress = async (request: AuthenticatedRequest, response: Response) 
+export const updateAddress = async (request: Request, response: Response) 
 : Promise<void> => {
   try {
     const addressUuid = String(request.params.uuid)
@@ -59,7 +55,7 @@ export const updateAddress = async (request: AuthenticatedRequest, response: Res
 
 
 // DELETE /api/addresses/:uuid
-export const deleteAddress = async (request: AuthenticatedRequest, response: Response)
+export const deleteAddress = async (request: Request, response: Response)
 : Promise<void> => {
   try {
     const addressUuid = String(request.params.uuid)
