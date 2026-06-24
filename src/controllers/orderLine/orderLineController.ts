@@ -1,11 +1,11 @@
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { getOrderLinesByOrderUuidService } from '../../services/orderLine/orderLineService'
-import { AuthenticatedRequest } from '../order/orderController'
+
 
 
 
 // GET /api/order-ine
-export const getOrderLinesByOrder = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const getOrderLinesByOrder = async (request: Request, response: Response): Promise<void> => {
   try {
     const orderUuid = String(request.params.uuid)
     const userUuid = request.user!.uuid

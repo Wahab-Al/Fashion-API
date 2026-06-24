@@ -1,15 +1,12 @@
 import { Request, response, Response } from "express";
 import { getAllUsersService, getUserByUuidService, updateUserService, deleteUserService } from "../../services/user/userService";
 
-interface AuthenticatedRequest extends Request {
-  user?: { uuid: string }
-}
 
 
 //#region User controller in User Dashboard (Customer Self-Management Controllers)
 
 // GET /api/users/me
-export const getMyProfile = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const getMyProfile = async (request: Request, response: Response): Promise<void> => {
   try {
     const uuid = request.user?.uuid!;
     const user = await getUserByUuidService(uuid);
@@ -20,7 +17,7 @@ export const getMyProfile = async (request: AuthenticatedRequest, response: Resp
 };
 
 // PATCH /api/users/me
-export const updateMyProfile = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const updateMyProfile = async (request: Request, response: Response): Promise<void> => {
   try {
     const uuid = request.user?.uuid!;
     
@@ -37,7 +34,7 @@ export const updateMyProfile = async (request: AuthenticatedRequest, response: R
 };
 
 // DELETE /api/users/me
-export const deleteMyAccount = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const deleteMyAccount = async (request: Request, response: Response): Promise<void> => {
   try {
     const uuid = request.user?.uuid!;
     await deleteUserService(uuid);
@@ -84,7 +81,7 @@ export const getUserByUuid = async (request: Request, response: Response): Promi
 
 
 // PATCH /api/users/:uuid
-export const updateUser = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const updateUser = async (request: Request, response: Response): Promise<void> => {
   try {
     const { uuid } = request.params
     if (request.user?.uuid !== uuid) {
@@ -100,7 +97,7 @@ export const updateUser = async (request: AuthenticatedRequest, response: Respon
 
 
 // DELETE /api/users/:uuid
-export const deleteUser = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const deleteUser = async (request: Request, response: Response): Promise<void> => {
   try {
     const { uuid } = request.params
     if (request.user?.uuid !== uuid) {

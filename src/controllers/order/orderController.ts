@@ -7,17 +7,13 @@ import {
   updateOrderStatusService,
   deleteOrderService
 } from '../../services/order/orderService'
-import pool from '../../config/database/db'
 
-export interface AuthenticatedRequest extends Request {
-  user?: { uuid: string }
-}
 
 
 
 
 // GET /api/orders
-export const getUserOrders = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const getUserOrders = async (request: Request, response: Response): Promise<void> => {
   try {
     const orders = await getUserOrdersService(request.user!.uuid)
     response.status(200).json({ data: orders })
@@ -43,7 +39,7 @@ export const getOrderByUuid = async (request: Request, response: Response): Prom
 
 
 // POST /api/orders
-export const createOrder = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const createOrder = async (request: Request, response: Response): Promise<void> => {
   try {
     const { items } = request.body
     if (!items || items.length === 0) {
@@ -61,7 +57,7 @@ export const createOrder = async (request: AuthenticatedRequest, response: Respo
 
 
 // PATCH /api/orders/:uuid/status
-export const updateOrderStatus = async (request: AuthenticatedRequest, response: Response): Promise<void> => {
+export const updateOrderStatus = async (request: Request, response: Response): Promise<void> => {
   try {
     const { status } = request.body
     if (!status) {
