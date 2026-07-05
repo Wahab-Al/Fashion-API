@@ -5,6 +5,8 @@ import { up as upOrders, down as downOrders } from './order/004_create_orders_ta
 import { up as upOrderLines, down as downOrderLines } from './orderLine/005_create_order_lines_table'
 import { up as upAddress, down as downAddress } from './Address/006_create_address_table'
 import { up as upToken, down as downToken } from './token/007_create_token_table'
+import { up as upCart, down as downCart } from './cart/008_create_carts_table'
+import { up as upCartItem, down as downCartItem } from './cartItem/009_create_cartIems_table'
 
 
 /**
@@ -19,6 +21,8 @@ export const runMigrations = async () : Promise<void> => {
     await upOrderLines()
     await upAddress()
     await upToken()
+    await upCart()
+    await upCartItem()
     console.log(`All UP migrations completed successfully.. `)
   } catch (error) {
     console.error(`Migration UP failed ${error}`)
@@ -40,6 +44,8 @@ export const runDownMigrations = async (): Promise<void> => {
     await downCategories()
     await downUsers()
     await downToken()
+    await downCart()
+    await downCartItem()
     console.log('All DOWN migrations completed successfully.')
   } catch (error) {
     console.error(`Migration Down failed ${error}`)
