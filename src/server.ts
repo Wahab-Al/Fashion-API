@@ -12,6 +12,8 @@ import productRouter from './routes/product/productRoutes'
 import orderRouter from './routes/order/orderRoutes'
 import tokenRouter from './routes/token/tokenRoutes'
 import cartRouter from './routes/cart/cartRoutes'
+import { applySecurityMiddleware } from './config/security/security.config'
+import pc  from 'picocolors'
 
 
 dotenv.config()
@@ -20,7 +22,10 @@ dotenv.config()
 const app = express()
 const PORT : number = process.env.PORT ? Number(process.env.PORT) : 5000
 
+// Security
+applySecurityMiddleware(app)
 
+// parsing middleware
 app.use(express.json())
 
 app.use(cors({
@@ -53,7 +58,7 @@ runMigrations()
 
 
 app.listen(PORT, ()=>{
-  console.log(`====== Server running on port ${PORT} ======`)
+    console.log(pc.greenBright(`====== Server running on port ${PORT} ======`))
 })
 
 
