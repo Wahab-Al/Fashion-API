@@ -42,7 +42,8 @@
     "mysql2": "^3.22.4",
     "picocolors": "^1.1.1",
     "uuid": "^14.0.0",
-    "xss-clean": "^0.1.4"
+    "xss-clean": "^0.1.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",
