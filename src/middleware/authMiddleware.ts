@@ -42,5 +42,4 @@ export const authMiddleware = async (request: Request, response: Response, next:
     response.status(500).json({ error: 'Internal Server Error during authentication' })
   }
 }
-
 //#endregion

@@ -1,3 +1,4 @@
+dotenv.config()
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
@@ -16,7 +17,6 @@ import { applySecurityMiddleware } from './config/security/security.config'
 import pc  from 'picocolors'
 
 
-dotenv.config()
 
 
 const app = express()
